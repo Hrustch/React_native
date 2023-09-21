@@ -1,6 +1,4 @@
-
-
-import React from "react";
+import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import {
   StyleSheet,
@@ -8,9 +6,13 @@ import {
   View,
   ImageBackground,
   TextInput,
+  Pressable,
 } from "react-native";
 
 export const RegScreen = () => {
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/font/Roboto-Bold.ttf"),
     "Roboto-Medium": require("../assets/font/Roboto-Medium.ttf"),
@@ -20,6 +22,13 @@ export const RegScreen = () => {
     return null;
   }
   const backgroundImage = "../assets/Photos/Photo_BG.png"
+
+  const onSubmit = ()=>{
+    console.log({login, email, password})
+  }
+
+
+
   return (
     <View style={styles.registerPage}>
       <ImageBackground source={require(backgroundImage)} imageStyle={styles.background} resizeMode='cover' > 
@@ -31,16 +40,16 @@ export const RegScreen = () => {
             <View style={styles.form}>
               <Text style={styles.title}>Реєстрація</Text>
 
-              <TextInput placeholder="Логін" style={styles.input} />
-              <TextInput placeholder="Адреса електронної пошти" style={styles.input} />
+              <TextInput placeholder="Логін" style={styles.input} onChangeText={setLogin}/>
+              <TextInput placeholder="Адреса електронної пошти" style={styles.input} onChangeText={setEmail}/>
 
               <View>
-                <TextInput placeholder="Пароль" style={styles.passInput} />
+                <TextInput placeholder="Пароль" style={styles.passInput} onChangeText={setPassword}/>
                 <Text style={styles.showPass}>Показати</Text>
               </View>          
               
             </View>
-            <Text style={styles.buttonReg}>Зареєстуватися</Text>
+            <Pressable style={styles.buttonReg} onPress={onSubmit}><Text style={{color: 'white'}}>Зареєструватися</Text></Pressable>
 
             <Text style={styles.haveAcc}>Вже є акаунт? Увійти</Text>
           </View>

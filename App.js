@@ -4,7 +4,7 @@ import { RegScreen } from './Screens/RegistrationScreen'
 import { LogScreen } from './Screens/LoginScreen'
 export default function App() {
   return (
-      <LogScreen/>
+      <RegScreen/>
   );
 }
 
