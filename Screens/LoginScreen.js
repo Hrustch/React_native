@@ -7,6 +7,9 @@ import {
   ImageBackground,
   TextInput,
   Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView
 } from "react-native";
 
 export const LogScreen = () => {
@@ -31,24 +34,26 @@ export const LogScreen = () => {
   return (
     <View style={styles.registerPage}>
       <ImageBackground source={require(backgroundImage)} imageStyle={styles.background} resizeMode='cover' > 
-        <View style={{height: "100%", justifyContent: "flex-end", paddingTop: 149}}>
-          <View style={styles.regCard}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{height: "100%", justifyContent: "flex-end", paddingTop: 149}}>
+            <View style={styles.regCard}>
 
-            <View style={styles.form}>
-              <Text style={styles.title}>Увійти</Text>
+              <View style={styles.form}>
+                <Text style={styles.title}>Увійти</Text>
 
-              <TextInput placeholder="Адреса електронної пошти" style={styles.input} onChangeText={setEmail}/>
-              <View>
-                <TextInput placeholder="Пароль" style={styles.passInput} onChangeText={setPassword}/>
-                <Text style={styles.showPass}>Показати</Text>
-              </View>          
-              
+                <TextInput placeholder="Адреса електронної пошти" style={styles.input} onChangeText={setEmail}/>
+                <View>
+                  <TextInput placeholder="Пароль" style={styles.passInput} onChangeText={setPassword}/>
+                  <Text style={styles.showPass}>Показати</Text>
+                </View>          
+                
+              </View>
+              <Pressable style={styles.buttonReg} onPress={onSubmit}><Text style={{color: 'white'}}>Увійти</Text></Pressable>
+
+              <Text style={styles.haveAcc}>Немає аккаунту? Зареєструватися</Text>
             </View>
-            <Pressable style={styles.buttonReg} onPress={onSubmit}><Text style={{color: 'white'}}>Увійти</Text></Pressable>
-
-            <Text style={styles.haveAcc}>Немає аккаунту? Зареєструватися</Text>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </ImageBackground>
     </View>
   );
