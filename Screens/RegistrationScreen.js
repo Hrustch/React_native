@@ -23,6 +23,7 @@ export const RegScreen = () => {
   return (
     <View style={styles.registerPage}>
       <ImageBackground source={require(backgroundImage)} imageStyle={styles.background} resizeMode='cover' > 
+        <View style={{height: "100%", justifyContent: "flex-end", paddingTop: 149}}>
           <View style={styles.regCard}>
 
             <View style={styles.avatar}></View>
@@ -42,10 +43,7 @@ export const RegScreen = () => {
             <Text style={styles.buttonReg}>Зареєстуватися</Text>
 
             <Text style={styles.haveAcc}>Вже є акаунт? Увійти</Text>
-            <View style={styles.bottom}>
-              <View style={styles.line}></View>
-            </View>
-
+          </View>
         </View>
       </ImageBackground>
     </View>
@@ -55,13 +53,10 @@ export const RegScreen = () => {
 const styles = StyleSheet.create({
   registerPage: {
 
-    },
+  },
   background: {
     height:'100%',
     width: "100%",
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end"
   },
   regCard: {
     alignItems: "center",
@@ -71,8 +66,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    height: 459,
-    /* marginTop: 250, */
+    height: 549,
+    marginTop: 147,
   },
 
 
