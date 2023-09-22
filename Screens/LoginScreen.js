@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
 import { useFonts } from "expo-font";
 import {
   StyleSheet,
@@ -13,6 +14,7 @@ import {
 } from "react-native";
 
 export const LogScreen = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fontsLoaded] = useFonts({
@@ -27,6 +29,7 @@ export const LogScreen = () => {
 
   const onSubmit = ()=>{
     console.log({email, password})
+    navigation.navigate("Home");
   }
 
 
@@ -50,7 +53,7 @@ export const LogScreen = () => {
               </View>
               <Pressable style={styles.buttonReg} onPress={onSubmit}><Text style={{color: 'white'}}>Увійти</Text></Pressable>
 
-              <Text style={styles.haveAcc}>Немає аккаунту? Зареєструватися</Text>
+              <Pressable onPress={() => navigation.navigate("Registration")}><Text style={styles.haveAcc}>Немає аккаунту? Зареєструватися</Text></Pressable>
             </View>
           </View>
         </TouchableWithoutFeedback>
