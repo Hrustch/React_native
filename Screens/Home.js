@@ -34,39 +34,11 @@ export const Home = () => {
                 inactiveColor: "#3e2465",
             }
             
-        })}
-        
-       
+        })}     
     >
-      <Tabs.Screen
-        name="Posts"
-        component={PostsScreen}
-        /* options={{
-          tabBarIcon: ({ color, size }) => (
-            <GridIcon name="Posts" color={color} size={size} />
-          ),
-        }} */
-      />
-      <Tabs.Screen
-        name="Create"
-        component={CreatePostsScreen}
-        /* options={{
-          tabBarLabel: "Create",
-          tabBarIcon: ({ color, size }) => (
-            <AddIcon name="Create" color={color} size={size} />
-          ),
-        }} */
-      />
-      <Tabs.Screen
-        name="Profile"
-        component={ProfileScreen}
-        /* options={{
-          tabBarLabel: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <UserIcon name="Profile" color={color} size={size} />
-          ),
-        }} */
-      />
+      <Tabs.Screen name="Posts" component={PostsScreen}/>
+      <Tabs.Screen name="Create" component={CreatePostsScreen}/>
+      <Tabs.Screen name="Profile" component={ProfileScreen}/>
     </Tabs.Navigator>
   );
 };
