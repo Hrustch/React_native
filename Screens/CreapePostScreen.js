@@ -49,6 +49,16 @@ const CreatePostsScreen = () => {
     setPhoto(newPhoto);
   };
 
+  const handleCreate = async() => {
+    try{
+    navigation.navigate("Posts")
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+
+
   if (photo) {
     return (
       <View style={styles.container}>
@@ -65,7 +75,7 @@ const CreatePostsScreen = () => {
                 <TextInput style={styles.inputs} placeholder="Місцевість..."></TextInput>
             </View>
         </View>
-        <Pressable style={styles.buttonReg} onPress={()=>{navigation.navigate("PostsScreen")}}><Text style={{color: 'white', fontSize: 16}}>Опублікувати</Text></Pressable>
+        <Pressable style={styles.buttonReg} onPress={handleCreate}><Text style={{color: 'white', fontSize: 16}}>Опублікувати</Text></Pressable>
       </View>
     );
   }
