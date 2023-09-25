@@ -12,12 +12,15 @@ import {
   Keyboard,
   KeyboardAvoidingView
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { registrationThunkFirebaseDb } from "../Redux/auth/operations";
 
 export const RegScreen = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation();
-  const [login, setLogin] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/font/Roboto-Bold.ttf"),
     "Roboto-Medium": require("../assets/font/Roboto-Medium.ttf"),
@@ -29,8 +32,11 @@ export const RegScreen = () => {
   const backgroundImage = "../assets/Photos/Photo_BG.png"
 
   const onSubmit = ()=>{
-    console.log({login, email, password})
-    navigation.navigate("Home");
+    dispatch(registrationThunkFirebaseDb({displayName: login, email, password}))
+
+    setLogin(null)
+    setEmail(null)
+    setPassword(null)
   }
 
 

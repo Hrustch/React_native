@@ -12,8 +12,11 @@ import {
   Keyboard,
   KeyboardAvoidingView
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { loginFirebaseThunk } from "../Redux/auth/operations";
 
 export const LogScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,8 +31,10 @@ export const LogScreen = () => {
   const backgroundImage = "../assets/Photos/Photo_BG.png"
 
   const onSubmit = ()=>{
-    console.log({email, password})
-    navigation.navigate("Home");
+    dispatch(loginFirebaseThunk({email, password}))
+    setEmail(null)
+    setPassword(null)
+
   }
 
 

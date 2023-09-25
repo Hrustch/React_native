@@ -18,9 +18,12 @@ const CreatePostsScreen = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [photo, setPhoto] = useState();
 
-  useEffect(() => {
+  const [photo, setPhoto] = useState();
+  const [descr, setDescr] = useState();
+  const [geo, setGeo] = useState();
+
+  useEffect(() => {    
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
       const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
@@ -44,12 +47,14 @@ const CreatePostsScreen = () => {
       base64: true,
       exif: false
     };
-
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setPhoto(newPhoto);
   };
 
+
+
   const handleCreate = async() => {
+    setPhoto(null);
     try{
     navigation.navigate("Posts")
     }
@@ -68,11 +73,11 @@ const CreatePostsScreen = () => {
         </View>
         <View >
             <View style={styles.inputContainer}>
-                <TextInput style={styles.inputs} placeholder="Назва..."></TextInput>
+                <TextInput style={styles.inputs} placeholder="Назва..." onChangeText={val => setDescr(val)}></TextInput>
             </View>
             <View style={styles.inputContainer}>
                 <Ionicons style={styles.locationIco} name="location-outline" size={24} color={"#BDBDBD"} />    
-                <TextInput style={styles.inputs} placeholder="Місцевість..."></TextInput>
+                <TextInput style={styles.inputs} placeholder="Місцевість..." onChangeText={val => setGeo(val)}></TextInput>
             </View>
         </View>
         <Pressable style={styles.buttonReg} onPress={handleCreate}><Text style={{color: 'white', fontSize: 16}}>Опублікувати</Text></Pressable>

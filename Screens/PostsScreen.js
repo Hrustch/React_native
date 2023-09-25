@@ -10,8 +10,11 @@ import {
 } from "react-native";
 
 import { useFonts } from "expo-font";
+import { useSelector } from "react-redux";
+import { selectCurrentUserFirebase } from "../Redux/auth/selectors";
 
 const PostsScreen = () => {
+  const user = useSelector(selectCurrentUserFirebase)
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/font/Roboto-Bold.ttf"),
     "Roboto-Medium": require("../assets/font/Roboto-Medium.ttf"),
@@ -30,8 +33,8 @@ const PostsScreen = () => {
               style={{ width: 60, height: 60, backgroundColor: "red" }}
             ></Image>
             <View style={styles.userInfo}>
-              <Text style={styles.login}>nikDen</Text>
-              <Text style={styles.email}>asdasd@gmail.com</Text>
+              <Text style={styles.login}>{user.displayName}</Text>
+              <Text style={styles.email}>{user.email }</Text>
             </View>
           </View>
         </View>
