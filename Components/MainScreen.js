@@ -13,6 +13,7 @@ import LogOut from "./LogOut";
 import { useSelector } from 'react-redux';
 import { selectCurrentUserFirebase } from '../Redux/auth/selectors';
 import { useFonts } from 'expo-font';
+import CommentsScreen from '../Screens/CommentsScreen';
 const MainStack = createStackNavigator();
 
 export default function MainScreen() {
@@ -31,7 +32,6 @@ export default function MainScreen() {
             {!user ? <>
             <MainStack.Screen name="Registration" component={RegScreen} options={{ headerShown: false }}/>
             <MainStack.Screen name="Login" component={LogScreen} options={{ headerShown: false }}/></> :
-            <>
             <MainStack.Screen
               name="Home"
               component={Home}
@@ -63,10 +63,10 @@ export default function MainScreen() {
                   }
                 }}
                 />
-            </>
+                
             }
             
-            
+            <MainStack.Screen name="Comments" component={CommentsScreen}/>
           </MainStack.Navigator>
         </NavigationContainer>      
   );

@@ -7,7 +7,20 @@ import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import { TextInput } from "react-native-gesture-handler";
 
+import firestore from '@react-native-firebase/firestore';
+import fbStorage from '@react-native-firebase/storage';
+import { auth, db, storage } from "../config";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
+
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useSelector } from "react-redux";
+import { selectCurrentUserFirebase } from "../Redux/auth/selectors";
+
+
+
 const CreatePostsScreen = () => {
+
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/font/Roboto-Bold.ttf"),
     "Roboto-Medium": require("../assets/font/Roboto-Medium.ttf"),
@@ -22,6 +35,9 @@ const CreatePostsScreen = () => {
   const [photo, setPhoto] = useState();
   const [descr, setDescr] = useState();
   const [geo, setGeo] = useState();
+
+  const user = useSelector(selectCurrentUserFirebase)
+
 
   useEffect(() => {    
     (async () => {
@@ -48,12 +64,42 @@ const CreatePostsScreen = () => {
       exif: false
     };
     let newPhoto = await cameraRef.current.takePictureAsync(options);
-    setPhoto(newPhoto);
+    setPhoto(newPhoto);    
   };
 
 
+  const uploadPhoto = async () => {
+    try{
+      const filename = photo.uri.split("/").pop();
+      const response = await fetch(photo.uri);
+      const file = await response.blob();
+      const avatarRef = ref(storage, `images/${filename}`);
+      await uploadBytes(avatarRef, file);
+      const url = await getDownloadURL(avatarRef)
+      
+      return url
+    }
+    catch(err){
+      console.log("upload pthoto err: ", err)
+    }
+  }
 
-  const handleCreate = async() => {
+
+
+  const handleCreate = async () => {   
+    try {
+      const imgURL = await uploadPhoto()
+      await addDoc(collection(db, "posts"), {
+        userId: user.uid,
+        imgURL,
+        descr,
+        geo,
+      });
+    } 
+    catch (error) {
+      console.log(error);
+    }
+
     setPhoto(null);
     try{
     navigation.navigate("Posts")
@@ -129,7 +175,7 @@ const CreatePostsScreen = () => {
 
 const styles = StyleSheet.create({
   container: { 
-    flex: 1,
+    /* flex: 1, */
     paddingHorizontal: 16, 
     paddingTop: 32,
   },

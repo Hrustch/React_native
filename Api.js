@@ -37,7 +37,7 @@ export const loginDB = async ({ email, password }) => {
       photoURL: user.photoURL,
     };
   } catch (error) {
-    console.log("loginDBERROR", error);
+    console.log("loginDB_ERROR", error);
     throw error;
   }
 };
@@ -118,18 +118,6 @@ export const authStateChanged = async (onChange = () => {}) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 export const addUser = (data) => {
   return data;
 };
@@ -185,7 +173,7 @@ export const getPostsDB = async () => {
   try {
     const snapshot = await getDocs(collection(db, "posts"));
     let posts = [];
-    snapshot.forEach((doc) => posts.push(doc.data()));
+    snapshot.forEach((doc) => posts.push({...doc.data(), id: doc.id}));
     return posts;
   } catch (error) {
     console.log("error", error);

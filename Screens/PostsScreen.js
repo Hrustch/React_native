@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   StyleSheet,
@@ -10,24 +10,33 @@ import {
 } from "react-native";
 
 import { useFonts } from "expo-font";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUserFirebase } from "../Redux/auth/selectors";
+import { getPostsThunk } from "../Redux/posts/operations";
+import { selectPosts } from "../Redux/posts/selectors";
+import Posts from "../Components/Posts";
 
 const PostsScreen = () => {
   const user = useSelector(selectCurrentUserFirebase)
+  const postsArr = useSelector(selectPosts)
+  const dispatch = useDispatch()
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/font/Roboto-Bold.ttf"),
     "Roboto-Medium": require("../assets/font/Roboto-Medium.ttf"),
     "Roboto-Regular": require("../assets/font/Roboto-Regular.ttf"),
   });
-
+  
+  
+  useEffect(()=>{
+    dispatch(getPostsThunk())    
+  },[])
+  
   if (!fontsLoaded) {
     return null;
   }
   return (
     <SafeAreaView>
-      <ScrollView style={styles.box}>
-        <View>
+        <View style={styles.box}>
           <View style={styles.userBox}>
             <Image
               style={{ width: 60, height: 60, backgroundColor: "red" }}
@@ -37,16 +46,17 @@ const PostsScreen = () => {
               <Text style={styles.email}>{user.email }</Text>
             </View>
           </View>
+        <Posts postsArr={postsArr}/>
         </View>
-      </ScrollView>
+{/*       <ScrollView style={styles.box}>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   box: {
-    height: "100%",
-    width: "100%",
+    padding: 16,
   },
   title: {
     color: "#212121",
@@ -56,12 +66,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   titleBlock: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
   },
   userBox: {
-    display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",
     alignItems: "center",

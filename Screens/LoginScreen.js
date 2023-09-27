@@ -34,7 +34,6 @@ export const LogScreen = () => {
     dispatch(loginFirebaseThunk({email, password}))
     setEmail(null)
     setPassword(null)
-
   }
 
 
